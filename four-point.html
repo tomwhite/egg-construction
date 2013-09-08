@@ -1,0 +1,71 @@
+<html>
+
+  <head>
+    <title>Four-point egg</title>
+    <script type="text/javascript" src="jsxgraphcore.js"></script>
+    <script type="text/javascript" src="jquery-1.8.3.min.js"></script>
+  </head>
+
+  <body>
+    <div id="box" class="jxgbox" style="height:600px"></div>
+    <script type="text/javascript">
+    
+    var showConstructionElements = true;
+    var eggColor = 'lightBlue';
+    
+    var board = JXG.JSXGraph.initBoard('box', {boundingbox:[-5,5,5,-5], keepaspectratio:true, showCopyright: false, showNavigation: false});
+    
+    function createConstruction(type, args) {
+      return board.createElement(type, args, {visible: showConstructionElements, fixed: true, strokeColor:'gray', strokeWidth:1});
+    }
+
+    function createFilled(type, args) {
+      return board.createElement(type, args, {fixed: true, strokeOpacity: 0, fillColor: eggColor, fillOpacity: 1, highlight: false});
+    }
+
+    var A = createConstruction('point', [0, 0]);
+    var B = createConstruction('point', [0, 1]);
+    var C = createConstruction('point', [0, 2]);
+    var D = createConstruction('point', [-1, 1]);
+    var E = createConstruction('point', [1, 1]);
+
+    var c1 = createConstruction('circle', [A, C]);
+    var c2 = createConstruction('circle', [B, A]);
+
+    var l1 = createConstruction('line', [A, B]);
+    var l2 = createConstruction('line', [A, D]);
+    var l3 = createConstruction('line', [A, E]);
+    var l4 = createConstruction('line', [D, E]);
+    
+    var F = createConstruction('intersection', [c1, l3, 1]);
+    var G = createConstruction('intersection', [c1, l2, 1]);
+    
+    var c3 = createConstruction('circle', [E, F]);
+    var c4 = createConstruction('circle', [D, G]);
+    
+    var H = createConstruction('intersection', [c3, l4, 1]);
+    var I = createConstruction('intersection', [c4, l4, 0]);
+    
+    var c5 = createConstruction('circle', [B, H]);
+    var J = createConstruction('intersection', [c5, l1]);
+    var c6 = createConstruction('circle', [J, C]);
+    
+    var l5 = createConstruction('line', [H, J]);
+    var l6 = createConstruction('line', [I, J]);
+    
+    var K = createConstruction('intersection', [c6, l6]);
+    var L = createConstruction('intersection', [c6, l5]);
+    
+    createFilled('sector', [D, G, I]);
+    createFilled('sector', [A, F, G]);
+    createFilled('sector', [E, H, F]);
+    createFilled('sector', [I, K, H]);
+    createFilled('sector', [J, L, K]);
+    createFilled('sector', [H, I, L]);
+
+    
+    </script>
+
+  </body>
+
+</html>

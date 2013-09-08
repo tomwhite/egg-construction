@@ -1,0 +1,54 @@
+<html>
+
+  <head>
+    <title>Thom's Oval II</title>
+    <script type="text/javascript" src="jsxgraphcore.js"></script>
+    <script type="text/javascript" src="jquery-1.8.3.min.js"></script>
+  </head>
+
+  <body>
+    <div id="box" class="jxgbox" style="height:600px"></div>
+    <script type="text/javascript">
+    
+    var showConstructionElements = true;
+    var eggColor = 'lightBlue';
+    
+    var board = JXG.JSXGraph.initBoard('box', {boundingbox:[-5,5,5,-5], keepaspectratio:true, showCopyright: false, showNavigation: false});
+    
+    function createConstruction(type, args) {
+      return board.createElement(type, args, {visible: showConstructionElements, fixed: true, strokeColor:'gray', strokeWidth:1});
+    }
+
+    function createFilled(type, args) {
+      return board.createElement(type, args, {fixed: true, strokeOpacity: 0, fillColor: eggColor, fillOpacity: 1, highlight: false});
+    }
+
+    var A = createConstruction('point', [-1, 0]);
+    var B = createConstruction('point', [1, 0]);
+    var C = createConstruction('point', [0, 0]);
+    var D = createConstruction('point', [0, -3]);
+
+    var c1 = createConstruction('circle', [A, B]);    
+    var c2 = createConstruction('circle', [B, A]);
+    var c3 = createConstruction('circle', [C, D]);
+    
+    var l1 = createConstruction('line', [A, D]);
+    var l2 = createConstruction('line', [B, D]);
+    
+    var E = createConstruction('intersection', [c1, l1, 1]);
+    var F = createConstruction('intersection', [c2, l2, 1]);
+    var c4 = createConstruction('circle', [D, E]);
+
+    var G = createConstruction('point', [-3, 0]);
+    var H = createConstruction('point', [3, 0]);
+
+    createFilled('sector', [C, G, H]);
+    createFilled('sector', [A, E, G]);
+    createFilled('sector', [D, F, E]);
+    createFilled('sector', [B, H, F]);
+    
+    </script>
+
+  </body>
+
+</html>

@@ -1,0 +1,46 @@
+<html>
+
+  <head>
+    <title>Thom's Oval II</title>
+    <script type="text/javascript" src="jsxgraphcore.js"></script>
+    <script type="text/javascript" src="jquery-1.8.3.min.js"></script>
+  </head>
+
+  <body>
+    <div id="box" class="jxgbox" style="height:600px"></div>
+    <script type="text/javascript">
+    
+    var showConstructionElements = true;
+    var eggColor = 'lightBlue';
+    
+    var board = JXG.JSXGraph.initBoard('box', {boundingbox:[-5,5,5,-5], keepaspectratio:true, showCopyright: false, showNavigation: false});
+    
+    function createConstruction(type, args) {
+      return board.createElement(type, args, {visible: showConstructionElements, fixed: true, strokeColor:'gray', strokeWidth:1});
+    }
+
+    function createFilled(type, args) {
+      return board.createElement(type, args, {fixed: true, strokeOpacity: 0, fillColor: eggColor, fillOpacity: 1, highlight: false});
+    }
+
+    var a = 1.5;  // arbitrary
+    var b = Math.sqrt(a*a + 1)
+    
+    var A = createConstruction('point', [-1, 0]);
+    var B = createConstruction('point', [1, 0]);
+    var C = createConstruction('point', [0, 0]);
+    var D = createConstruction('point', [0, a]);
+    var E = createConstruction('point', [1 - 2 * b, 0]);
+    var F = createConstruction('point', [2 * b - 1, 0]);
+    
+    var c1 = createConstruction('circle', [C, E]);    
+    var c2 = createConstruction('circle', [B, E]);
+    var c3 = createConstruction('circle', [A, F]);
+    
+    var c4 = createConstruction('circle', [D, A]);
+    
+    </script>
+
+  </body>
+
+</html>
