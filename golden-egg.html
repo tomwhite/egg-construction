@@ -22,72 +22,76 @@
     function createFilled(type, args) {
       return board.createElement(type, args, {fixed: true, strokeOpacity: 0, fillColor: eggColor, fillOpacity: 1, highlight: false});
     }
-
-    var A = createConstruction('point', [0, 0]);
-    var B = createConstruction('point', [1, 0]);
-    var C = createConstruction('point', [0, 1]);
-    var D = createConstruction('point', [-1, 0]);
     
-    var l1 = createConstruction('line', [A, B]);
-    var l2 = createConstruction('line', [A, C]);    
+    function point(args) {
+      return createConstruction('point', args);
+    }
+
+    function line(args) {
+      return createConstruction('line', args);
+    }
+
+    function circle(args) {
+      return createConstruction('circle', args);
+    }
+
+    function intersection(args) {
+      return createConstruction('intersection', args);
+    }
+
+    var A = point([0, 0]);
+    var B = point([1, 0]);
+    var C = point([0, 1]);
+    var D = point([-1, 0]);
+    
+    var l1 = line([A, B]);
+    var l2 = line([A, C]);    
     
     // Flower
     
-    var c1 = createConstruction('circle', [A, B]);
-    var c2 = createConstruction('circle', [C, A]);
-    
-    var E = createConstruction('intersection', [c1, c2, 1]);  
-    var c3 = createConstruction('circle', [E, A]);
-
-    var F = createConstruction('intersection', [c1, c3, 1]);    
-    var c4 = createConstruction('circle', [F, A]);
-
-    var G = createConstruction('intersection', [c1, c4, 1]);    
-    var c5 = createConstruction('circle', [G, A]);
-
-    var H = createConstruction('intersection', [c1, c5, 1]);    
-    var c6 = createConstruction('circle', [H, A]);
-
-    var I = createConstruction('intersection', [c1, c6, 1]);    
-    var c7 = createConstruction('circle', [I, A]);
+    var c1 = circle([A, B]);
+    var c2 = circle([C, A]);
+    var c3 = circle([intersection([c1, c2, 1]), A]);
+    var c4 = circle([intersection([c1, c3, 1]), A]);
+    var c5 = circle([intersection([c1, c4, 1]), A]);
+    var c6 = circle([intersection([c1, c5, 1]), A]);
+    var c7 = circle([intersection([c1, c6, 1]), A]);
     
     // End flower
 
-    var J = createConstruction('point', [0, 2]);
-    var c8 = createConstruction('circle', [B, J]);
-    var c9 = createConstruction('circle', [D, J]);
+    var J = point([0, 2]);
+    var c8 = circle([B, J]);
+    var c9 = circle([D, J]);
     
-    var K = createConstruction('intersection', [c9, l1, 0]);
-    var L = createConstruction('intersection', [c8, l1, 1]);
+    var K = intersection([c9, l1, 0]);
+    var L = intersection([c8, l1, 1]);
 
-    // var M = createConstruction('point', [0, 1.57]); // guess
+    // var M = point([0, 1.57]); // guess
     // 
-    // var l3 = createConstruction('line', [K, M]);    
-    // var c10 = createConstruction('circle', [L, M]);
+    // var l3 = line([K, M]);    
+    // var c10 = circle([L, M]);
     // 
-    // var N = createConstruction('intersection', [c1, l3, 0]);
-    // var O = createConstruction('intersection', [c1, c10, 0]);
+    // var N = intersection([c1, l3, 0]);
+    // var O = intersection([c1, c10, 0]);
     // do N and O indeed coincide? not easy to say how do we work how to constuct this? or even calculate it?
     
-    var M = createConstruction('intersection', [c9, l1, 1]);
-    var c10 = createConstruction('circle', [L, M]); // not obvious from book, but seems "natural"
-    var N = createConstruction('intersection', [l2, c10, 0]);
+    var M = intersection([c9, l1, 1]);
+    var c10 = circle([L, M]); // not obvious from book, but seems "natural"
+    var N = intersection([l2, c10, 0]);
     
-    var l3 = createConstruction('line', [K, N]);
-    var l4 = createConstruction('line', [L, N]);
+    var l3 = line([K, N]);
+    var l4 = line([L, N]);
     
     //
     
-    var O = createConstruction('point', [0, -2]);
-    var P = createConstruction('point', [-2, 0]);
-    var Q = createConstruction('point', [2, 0]);
+    var O = point([0, -2]);
+    var P = point([-2, 0]);
+    var Q = point([2, 0]);
 
-    var c11 = createConstruction('circle', [A, O]);
+    var c11 = circle([A, O]);
 
-    var c12 = createConstruction('circle', [K, P]);
-    var R = createConstruction('intersection', [c12, l3, 0]);
-    var c13 = createConstruction('circle', [L, Q]);
-    var S = createConstruction('intersection', [c13, l4, 0]);
+    var R = intersection([circle([K, P]), l3, 0]);
+    var S = intersection([circle([L, Q]), l4, 0]);
     
     createFilled('sector', [A, P, Q]);
     createFilled('sector', [K, R, P]);
