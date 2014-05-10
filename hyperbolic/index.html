@@ -6,11 +6,13 @@
     <script type="text/javascript" src="../jquery-1.8.3.min.js"></script>  </head>
 
   <body>
-    <div id="box" style="width:400px; height:400px;"></div>
+    <div id="box" style="width:400px; height:400px; float: left"></div>
+    <div id="hyper" style="width:400px; height:400px"></div>
     <script type="text/javascript">
 
-    var board = JXG.JSXGraph.initBoard('box', {
+    var board = JXG.JSXGraph.initBoard('hyper', {
       boundingbox: [-1.1, -1.1, 1.5, 1.5],
+      axis: false,
       showCopyright: false,
       showNavigation: false
     });
@@ -75,10 +77,38 @@
 
 	for (var offx = -5; offx < 5; offx++) {
 		for (var offy = -5; offy < 5; offy++) {
-		    createEgg(offx, offy);
+		    if (!(offx == 0 && offy == 0)) {
+			    createEgg(offx, offy);
+			}
 	    }
     }
+    createEgg(0, 0); // draw primary egg on top
     board.update();
+
+	// show chosen egg by itself and scaled to box
+    var box = JXG.JSXGraph.initBoard('box', {
+      boundingbox: [tanh(-bSlider.Value()), tanh(-aSlider.Value() + dSlider.Value()), tanh(bSlider.Value()), tanh(aSlider.Value() + dSlider.Value())],
+      keepaspectratio: true,
+      axis: false,
+      showCopyright: false,
+      showNavigation: false
+    });
+	box.createElement('curve', [
+              function(t){return projecty(t, 0, 0);}, 
+              function(t){return projectx(t, 0, 0);},
+        0, 2*Math.PI
+              ], 
+              {strokeColor:'black', strokeWidth:0, fillColor: 'black', fillOpacity: 1}
+            );
+
+    function updateBox() {
+	    box.setBoundingBox([tanh(-bSlider.Value()), tanh(-aSlider.Value() + dSlider.Value()), tanh(bSlider.Value()), tanh(aSlider.Value() + dSlider.Value())], true);
+    	box.update();
+    }
+
+    aSlider.on('drag', updateBox);
+    bSlider.on('drag', updateBox);
+    dSlider.on('drag', updateBox);
     
     </script>
   </body>
