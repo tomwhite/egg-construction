@@ -23,12 +23,12 @@
 
     var hyper = true;
 
-    function fx(t) {
-      return aSlider.Value() * Math.cos(t) + dSlider.Value();
+    function fx(t, offx) {
+      return aSlider.Value() * Math.cos(t) + dSlider.Value() + (offx*aSlider.Value()*2);
     }
 
-    function fy(t) {
-      return bSlider.Value() * Math.sin(t) + 0.0;
+    function fy(t, offy) {
+      return bSlider.Value() * Math.sin(t) + 0.0 + (offy*bSlider.Value()*2);
     }
 
     function tanh(x) {
@@ -48,27 +48,36 @@
       return [Math.sqrt(x*x + y*y), Math.atan2(y, x)];
     }
   
-    function project(t) {
-      var pol = cartesianToPolar(fx(t), fy(t));
-      var newR = 0.6 * tanh(pol[0]);
+    function project(t, offx, offy) {
+      var pol = cartesianToPolar(fx(t, offx), fy(t, offy));
+      var newR = tanh(pol[0]);
       return polarToCatesian(newR, pol[1]);
     }
   
-    function projectx(t) {
-      return hyper ? project(t)[0] : fx(t);
+    function projectx(t, offx, offy) {
+      return hyper ? project(t, offx, offy)[0] : fx(t, offx);
     }
   
-    function projecty(t) {
-      return hyper ? project(t)[1] : fy(t);
+    function projecty(t, offx, offy) {
+      return hyper ? project(t, offx, offy)[1] : fy(t, offy);
     }
 
-    board.createElement('curve', [
-              function(t){return projecty(t);}, 
-              function(t){return projectx(t);},
-        0, 2*Math.PI
-              ], 
-              {strokeColor:'red', strokeWidth:2}
-            );
+    function createEgg(offx, offy) {
+	    var color = ((offx == 0 && offy == 0) ? "red" : "lightgray");
+    	board.createElement('curve', [
+	              function(t){return projecty(t, offx, offy);}, 
+	              function(t){return projectx(t, offx, offy);},
+	        0, 2*Math.PI
+	              ], 
+	              {strokeColor:color, strokeWidth:1}
+	            );
+    }
+
+	for (var offx = -5; offx < 5; offx++) {
+		for (var offy = -5; offy < 5; offy++) {
+		    createEgg(offx, offy);
+	    }
+    }
     board.update();
     
     </script>
