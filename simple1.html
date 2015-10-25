@@ -1,0 +1,74 @@
+<html>
+
+  <head>
+    <title>Egg</title>
+    <script type="text/javascript" src="jsxgraphcore.js"></script>
+    <script type="text/javascript" src="jquery-1.8.3.min.js"></script>
+  </head>
+
+  <body>
+    <table cellspacing="20" border="1">
+      <tr>
+        <td>
+          <div id="step1" class="jxgbox" style="width:240px; height:300px"></div>
+        </td>
+        <td>
+          <p class="steps" style="width:240px">1. Draw a horizontal line on the paper. It should be roughly in the middle.</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div id="step2" class="jxgbox" style="width:240px; height:300px"></div>
+        </td>
+        <td>
+          <p>2. Put the point of the compass on the line (somewhere near the middle, we'll call it point A) and draw a circle.</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div id="step3" class="jxgbox" style="width:240px; height:300px"></div>
+        </td>
+        <td>
+          <p>3. Make the compasses wider (about twice as wide), then place the point of the compasses on one of the points where the line crosses the circle (point B). Draw an arc (a part of a circle) below the line.</p>
+        </td>
+      </tr>
+    </table>
+    
+    <script type="text/javascript">
+    
+    var showConstructionElements = true;
+    var bounds = [-2,2.5,2,-2.5];
+
+    function board(name, type, args) {
+      return JXG.JSXGraph.initBoard(name, {boundingbox: bounds, keepaspectratio:true, showCopyright: false, showNavigation: false});
+    }
+
+    function createConstruction(board, type, args) {
+      return board.createElement(type, args, {visible: showConstructionElements, fixed: true, strokeColor:'gray', strokeWidth:1});
+    }
+
+    {
+      var step1 = board('step1');
+      var l1 = step1.createElement('line', [[-1.9, 0], [1.9, 0]], {visible: showConstructionElements, fixed: true, strokeColor:'gray', strokeWidth:1, straightFirst:false, straightLast:false});
+    }
+
+    {
+      var step2 = board('step2');
+      var l1 = step2.createElement('line', [[-1.9, 0], [1.9, 0]], {visible: showConstructionElements, fixed: true, strokeColor:'gray', strokeWidth:1, straightFirst:false, straightLast:false});
+      var A = createConstruction(step2, 'point', [0, 0]);
+      var c1 = createConstruction(step2, 'circle', [A, [1, 0]]);
+    }
+
+    {
+      var step3 = board('step3');
+      var l1 = step3.createElement('line', [[-1.9, 0], [1.9, 0]], {visible: showConstructionElements, fixed: true, strokeColor:'gray', strokeWidth:1, straightFirst:false, straightLast:false});
+      var A = createConstruction(step3, 'point', [0, 0]);
+      var c1 = createConstruction(step3, 'circle', [A, [1, 0]]);
+      var B = createConstruction(step3, 'point', [-1, 0]);
+    }
+    
+    </script>
+
+  </body>
+
+</html>
