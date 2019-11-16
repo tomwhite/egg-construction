@@ -1,55 +1,27 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Egg construction</title>
+</head>
+<body>
 
-  <head>
-    <title>Egg</title>
-    <script type="text/javascript" src="jsxgraphcore.js"></script>
-    <script type="text/javascript" src="jquery-1.8.3.min.js"></script>
-  </head>
+<p>Compass constructions for egg shapes from 'Mathographics' by Robert Dixon, in JSXGraph.</p>
 
-  <body>
-    <div id="box" class="jxgbox" style="height:600px"></div>
-    <script type="text/javascript">
-    
-    var showConstructionElements = true;
-    var eggColor = 'lightBlue';
-    
-    var board = JXG.JSXGraph.initBoard('box', {boundingbox:[-5,5,5,-5], keepaspectratio:true, showCopyright: false, showNavigation: false});
-    
-    function createConstruction(type, args) {
-      return board.createElement(type, args, {visible: showConstructionElements, fixed: true, strokeColor:'gray', strokeWidth:1});
-    }
+<ol>
+    <li><a href="moss.html">Moss' egg</a></li>
+    <li>Thom's oval or eggs: <a href="thom-oval-1.html">I</a> and <a href="thom-oval-2.html">II</a></li>
+    <li><a href="root3-2-root7.html">&#8730;3:2:&#8730;7</a></li>
+    <li><a href="golden-egg.html">Golden egg</a></li>
+    <li><a href="four-point.html">Four-point egg</a></li>
+</ol>
 
-    function createFilled(type, args) {
-      return board.createElement(type, args, {fixed: true, strokeOpacity: 0, fillColor: eggColor, fillOpacity: 1, highlight: false});
-    }
+<p>A couple of other egg shape generators</p>
 
-    var A = createConstruction('point', [0, 0]);
-    var B = createConstruction('point', [1, 0]);
-    var C = createConstruction('point', [-1, 0]);
-    var D = createConstruction('point', [0, 1]);
+<ul>
+    <li><a href="geometric/index.html">Baker's egg</a>, from <a href="https://bioone.org/journals/the-auk/volume-119/issue-4/0004-8038(2002)119%5b1179%3aAGMFDS%5d2.0.CO%3b2/A-Geometric-Method-for-Determining-Shape-of-Bird-Eggs/10.1642/0004-8038(2002)119[1179:AGMFDS]2.0.CO;2.short">"A Geometric Method for Determining Shape of Bird Eggs"</a></li>
+    <li><a href="hyperbolic/index.html">A hyperbolic egg</a>, which is the shape obtained by projecting an ellipse onto a hyperbolic space</li>
+</ul>
 
-    var c1 = createConstruction('circle', [A, B]);    
-    var c2 = createConstruction('circle', [B, C]);
-    var c3 = createConstruction('circle', [C, B]);
-
-    var l1 = createConstruction('line', [B, D]);
-    var l2 = createConstruction('line', [C, D]);
-    
-    var E = createConstruction('intersection', [c2, l1]);
-    var F = createConstruction('intersection', [c3, l2]);
-    var c4 = createConstruction('circle', [D, E]);
-    
-    createFilled('sector', [A, C, B]);
-    createFilled('sector', [C, B, F]);
-    if (showConstructionElements) {
-      createFilled('sector', [D, F, E]);
-    } else {
-      createFilled('circle', [D, F]); // use a circle rather than a sector to avoid thin gaps
-    }
-    createFilled('sector', [B, E, C]);
-    
-    </script>
-
-  </body>
-
+</body>
 </html>
